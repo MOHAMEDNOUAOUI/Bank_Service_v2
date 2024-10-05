@@ -20,11 +20,19 @@ public class DemandeServlet extends HttpServlet {
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
             if (isValid(request)) {
-                savetoDatabase(request);
+                Demande demande = savetoDatabase(request);
+                HttpSession session = request.getSession();
+                if(demande!=null) {
+                    session.setAttribute("message", "success" );
+                }
+                else {
+                    session.setAttribute("message", "error" );
+                }
+            response.sendRedirect("index.jsp");
             }
     }
 
-    private void savetoDatabase(HttpServletRequest request) {
+    private Demande savetoDatabase(HttpServletRequest request) {
         Demande demande = new Demande();
         demande.setMonproject(request.getParameter("monproject"));
         demande.setJesuis(request.getParameter("jesuis_select"));
@@ -47,7 +55,8 @@ public class DemandeServlet extends HttpServlet {
         demande.setDatenaissance(datenaissanceDate);
         demande.setDatedebauche(datedembauche);
 
-        service.createDemande(demande);
+        Demande demandeservice = service.createDemande(demande);
+        return demandeservice;
     }
 
     private boolean isValid(HttpServletRequest request) {

@@ -14,7 +14,8 @@ public class DemandeServiceImpl implements DemandeService {
 
 
     @Override
-    public void createDemande(Demande demande) {
+    public Demande createDemande(Demande demande) {
         repo.save(demande);
+        return demande;
     }
 }

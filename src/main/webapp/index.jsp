@@ -11,6 +11,24 @@
 
 <body>
 
+<%
+session = request.getSession();
+String message = (String) session.getAttribute("message");
+if(message != null) {
+    if ("success".equals(message)){
+%>
+      <div class="alert alert-success">Demande saved successfully!</div>
+<%
+    } else if ("error".equals(message)) {
+%>
+        <div class="alert alert-danger">Error saving the demande!</div>
+<%
+    }
+
+    session.removeAttribute("message");
+            }
+%>
+
 <div class="container">
     <div class="leftcontainer">
 
