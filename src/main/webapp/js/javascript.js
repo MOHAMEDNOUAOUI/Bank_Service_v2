@@ -15,92 +15,6 @@ var inputemail = document.getElementById('email').value;
 var inputphone = document.getElementById('telephon').value;
 
 
-
-
-
-
-var max;
-var array = generatearray(120);
-inputmonths.setAttribute("max" , array.length - 1);
-
-inputmonths.oninput = function() {
-
-    output.value = array[this.value];
-
-    const priceinit = pricerange.closest('div').querySelector('input[type="text"]').value;
-    const months = output.value;
-
-
-    var annualInterestRate = 0.05;
-    const monthlyInterestRate = annualInterestRate / 12;
-
-
-
-    var price = (priceinit * monthlyInterestRate) / (1 - Math.pow(1 + monthlyInterestRate , -months));
-
-
-    document.querySelector('#mensualite').value = parseFloat(price).toFixed(2);
-    mentualiterange.setAttribute('max' , price.toFixed(2));
-
-}
-
-
-inputmonths.oninput();
-
-
-
-function generatearray (max) {
-    const current = [];
-    let start = 6;
-
-
-    while(start <= max) {
-        current.push(start);
-        start = start+6;
-    }
-    max = max;
-
-    return current;
-}
-
-
-
-
-pricerange.addEventListener('input' , (e) => {
-    var closetstextarea = pricerange.closest("div").querySelector('input[type="text"]');
-    closetstextarea.value = parseFloat(e.target.value);
-
-    const months = parseFloat(document.querySelector('#dure').value);
-
-
-    var annualInterestRate = 0.05;
-    const monthlyInterestRate = annualInterestRate / 12;
-
-    var price = (e.target.value * monthlyInterestRate) / (1 - Math.pow(1 + monthlyInterestRate , -months));
-
-
-
-    document.querySelector('#mensualite').value = parseFloat(price).toFixed(2);
-    mentualiterange.setAttribute('max' , price.toFixed(2));
-
-})
-
-
-
-
-
-mentualiterange.addEventListener('input' , (e) => {
-    var closetstextarea = mentualiterange.closest('div').querySelector('input[type="text"]');
-    var mensualite = closetstextarea.value = e.target.value;
-
-
-
-
-
-})
-
-
-
 // //first page Continue button
 function AddSection1Data() {
     var selectprject = document.getElementById('monproject').value;
@@ -266,12 +180,12 @@ showSection(currentSection);
 
 function changingColors(maxSectionReached) {
     if(maxSectionReached == 3){
-        document.querySelector('.first').style.backgroundColor = 'blue';
-        document.querySelector('.second').style.backgroundColor = 'blue';
-        document.querySelector('.last').style.backgroundColor = 'blue';
+        document.querySelector('.first').style.backgroundColor ='rgb(2,140,150)';
+        document.querySelector('.second').style.backgroundColor = 'rgb(2,140,150)';
+        document.querySelector('.last').style.backgroundColor = 'rgb(2,140,150)';
     }
     else if(maxSectionReached ==2){
-        document.querySelector('.second').style.backgroundColor = 'blue';
-        document.querySelector('.first').style.backgroundColor ='blue';
+        document.querySelector('.second').style.backgroundColor = 'rgb(2,140,150)';
+        document.querySelector('.first').style.backgroundColor ='rgb(2,140,150)';
     }
 }

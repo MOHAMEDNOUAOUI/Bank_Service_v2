@@ -75,24 +75,24 @@ if(message != null) {
                 </div>
 
 
+
                 <div class="montant inputcontainer">
                     <label for="montant_endh_text_aread">Montant (en DH)</label>
                     <input name="montant" type="text" value="5000" id="montant_endh_text_aread" class="inputcontainer_input">
-                    <input type="range" class="rangeinputs" id="montant_range" min="5000" max="400000" value="10000">
+                    <input type="range" class="rangeinputs" id="montant_range" min="5000" max="400000" value="10000" step="1000">
                 </div>
 
                 <div class="duree inputcontainer">
                     <label for="dure">Durée (en mois)</label>
                     <input name="dure" type="text" value="24" id="dure" class="inputcontainer_input">
-                    <input type="range" class="rangeinputs" min="0" value="0" max="" step="1">
+                    <input type="range" class="rangeinputs" id="dure_range" min="6" value="24" max="120" step="6">
                 </div>
 
                 <div class="mensualite inputcontainer">
                     <label for="mensualite">Mensualités (en DH)</label>
-                    <input name="mensualite" type="text" id="mensualite" class="inputcontainer_input">
-                    <input type="range" id="mensualite_range" min="0" value="0" max="" class="rangeinputs">
+                    <input name="mensualite" type="text" id="mensualite" value="469.4" class="inputcontainer_input">
+                    <input type="range" id="mensualite_range" min="141.83" value="469.4" max="900.68" step="1" class="rangeinputs">
                 </div>
-
 
 
 
@@ -233,4 +233,5 @@ if(message != null) {
 
 <script src="./js/javascript.js"></script>
 <script src="./js/SecondPage.js"></script>
+<script src="./js/inputs.js"></script>
 </html>
