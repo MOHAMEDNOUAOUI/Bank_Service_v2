@@ -62,7 +62,7 @@ var form = document.querySelector('form');
 
 const nameRegex = /^[A-Za-z\s]{2,50}$/;
 const CINRegex = /^[A-Z]{1,2}\d{5,6}$/;
-const dateRegex = /^\d{2}\/\d{2}\/\d{4}$/;
+const dateRegex = /^\d{4}\/\d{2}\/\d{2}$/;
 const revenueRegex = /^\d+(\.\d{1,2})?$/;
 
 
@@ -108,6 +108,14 @@ function validateForm() {
     if (!dateRegex.test(dateEmbaucheInput.value)) {
         isValid = false;
         errorMessage += "Invalid hire date format (YYYY-MM-DD).\n";
+    }else{
+        const DateEmbauche = new Date(dateEmbaucheInput.value);
+        const today = new Date();
+        today.setHours(0,0,0,0);
+        if(DateEmbauche < today){
+            isValid = false;
+            errorMessage += "DateEmbauche must be today or in the future.\n";
+        }
     }
 
     if (!revenueRegex.test(totalRevenueInput.value)) {

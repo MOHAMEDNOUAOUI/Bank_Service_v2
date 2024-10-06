@@ -3,6 +3,7 @@ package com.wora.bankservice.controller;
 import java.io.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 import com.wora.bankservice.entity.Demande;
 import com.wora.bankservice.service.DemandeService;
@@ -28,7 +29,7 @@ public class DemandeServlet extends HttpServlet {
                 else {
                     session.setAttribute("message", "error" );
                 }
-            response.sendRedirect("index.jsp");
+            response.sendRedirect("/");
             }
     }
 
@@ -49,7 +50,7 @@ public class DemandeServlet extends HttpServlet {
 
         String datenaissance = request.getParameter("datenaissance");
         String DateDembauche = request.getParameter("DateDembauche");
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
         LocalDate datenaissanceDate = LocalDate.parse(datenaissance , formatter);
         LocalDate datedembauche = LocalDate.parse(DateDembauche , formatter);
         demande.setDatenaissance(datenaissanceDate);
@@ -83,14 +84,14 @@ public class DemandeServlet extends HttpServlet {
         }
 
         try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 
             Double montant = Double.parseDouble(montantStr);
             int dure = Integer.parseInt(dureStr);
             Double mensualite = Double.parseDouble(mensualiteStr);
             Double totalrevenue = Double.parseDouble(totalrevenueStr);
-            LocalDate datenaissanceDate = LocalDate.parse(datenaissance , formatter);
-            LocalDate datedembauche = LocalDate.parse(DateDembauche , formatter);
+            LocalDate datenaissanceDate = LocalDate.parse(datenaissance.trim(), formatter);
+            LocalDate datedembauche = LocalDate.parse(DateDembauche.trim(), formatter);
             if (montant <= 0 || dure <= 0 || mensualite <= 0 || totalrevenue <= 0) {
                 return false;
             }
@@ -100,8 +101,15 @@ public class DemandeServlet extends HttpServlet {
             if (!telephone.matches("^\\+?[1-9]\\d{1,14}(\\s|-)?(\\(?\\d{1,4}\\)?|\\d+)(\\s|-)?(\\d+(\\s|-)?)*$")) {
                 return false;
             }
+            LocalDate today = LocalDate.now();
+            if (datedembauche.isBefore(today)) {
+                System.err.println("Date d'embauche must be today or in the future.");
+                return false;
+            }
         } catch (NumberFormatException e) {
             return false;
+        } catch (DateTimeParseException e) {
+            System.err.println("Date parcing error : "+e.getMessage());
         }
 
         return true;

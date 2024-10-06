@@ -31,21 +31,21 @@ function AddSection1Data() {
         if (divDetails) {
 
             divDetails.innerHTML = `
-                <h2>Détails de mon crédit</h2>
-                <p>Vous êtes: <span>${jesuis}</span></p>
+                <h2>Details de mon credit</h2>
+                <p>Vous etes: <span>${jesuis}</span></p>
                 <p>Montant: <span>${montant} DH</span></p>
-                <p>Durée: <span>${dure} mois</span></p>
-                <p>Mensualité: <span>${mensualite} DH</span></p>
+                <p>Duree: <span>${dure} mois</span></p>
+                <p>Mensualite: <span>${mensualite} DH</span></p>
             `;
         } else {
             divDetails = document.createElement('div');
             divDetails.classList.add('Détails');
             divDetails.innerHTML = `
-                <h2>Détails de mon crédit</h2>
-                <p>Vous êtes: <span>${jesuis}</span></p>
+                <h2>Details de mon credit</h2>
+                <p>Vous etes: <span>${jesuis}</span></p>
                 <p>Montant: <span>${montant} DH</span></p>
-                <p>Durée: <span>${dure} mois</span></p>
-                <p>Mensualité: <span>${mensualite} DH</span></p>
+                <p>Duree: <span>${dure} mois</span></p>
+                <p>Mensualite: <span>${mensualite} DH</span></p>
             `;
             document.querySelector('.rightcontainer').appendChild(divDetails);
         }
@@ -78,17 +78,17 @@ function AddSection2Data() {
 
     if(UserDetails){
         UserDetails.innerHTML = `
-            <h2>Coordonnées et infos personnelles</h2>
+            <h2>Coordonnees et infos personnelles</h2>
                 <p>Email: <span>${inputemail.value}</span></p>
-                <p>Téléphone: <span>${inputphone.value} DH</span></p>
+                <p>Telephone: <span>${inputphone.value} DH</span></p>
             `
     }else{
         UserDetails = document.createElement('div');
         UserDetails.classList.add('UserDetails');
         UserDetails.innerHTML = `
-            <h2>Coordonnées et infos personnelles</h2>
+            <h2>Coordonnees et infos personnelles</h2>
                 <p>Email: <span>${inputemail.value}</span></p>
-                <p>Téléphone: <span>${inputphone.value}</span></p>
+                <p>Telephone: <span>${inputphone.value} DH</span></p>
             `
     }
 

@@ -11,6 +11,9 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -75,8 +78,8 @@ public class Demande implements Serializable {
 
     @Column(name = "totalrevenue")
     private double Totalrevenue;
-    
 
-
+    @OneToMany(mappedBy = "demande" , cascade = CascadeType.ALL , orphanRemoval = true)
+    private Set<DemandeStatut> demandeStatuts = new HashSet<>();
 
 }

@@ -10,7 +10,7 @@ public interface DemandeRepository {
     Demande save(Demande demande);
     Optional<Demande> findById(Long id);
     List<Demande> findAll();
-    Demande delete(Demande demande);
+    boolean delete(Demande demande);
     Demande update(Demande demande);
 
 }

@@ -30,28 +30,52 @@ public class DemandeRepositoryImpl implements DemandeRepository {
             if(tx.isActive()){
                 tx.rollback();
             }
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
         return demande;
     }
 
     @Override
     public Optional<Demande> findById(Long id) {
-        return Optional.empty();
+        EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        tx.begin();
+        Optional<Demande> demande = Optional.ofNullable(em.find(Demande.class, id));
+        tx.commit();
+        em.close();
+        return demande;
     }
 
     @Override
     public List<Demande> findAll() {
-        return List.of();
+        EntityManager em= ENTITY_MANAGER_FACTORY.createEntityManager();
+        EntityTransaction EntityTransaction = em.getTransaction();
+        EntityTransaction.begin();
+        List DemandeList = em.createQuery("SELECT d FROM Demande d JOIN FETCH d.demandeStatuts ds JOIN FETCH ds.statut").getResultList();
+        EntityTransaction.commit();
+        em.close();
+        return DemandeList;
     }
 
     @Override
-    public Demande delete(Demande demande) {
-        return null;
+    public boolean delete(Demande demande) {
+        EntityManager em= ENTITY_MANAGER_FACTORY.createEntityManager();
+        EntityTransaction EntityTransaction = em.getTransaction();
+        EntityTransaction.begin();
+        em.remove(demande);
+        EntityTransaction.commit();
+        em.close();
+        return true;
     }
 
     @Override
     public Demande update(Demande demande) {
-        return null;
+        EntityManager em= ENTITY_MANAGER_FACTORY.createEntityManager();
+        EntityTransaction EntityTransaction = em.getTransaction();
+        EntityTransaction.begin();
+        Demande demandemerge = em.merge(demande);
+        EntityTransaction.commit();
+        em.close();
+        return demandemerge;
     }
 }
