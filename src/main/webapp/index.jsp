@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet"  href="./css/style.css">
+    <link rel="stylesheet" href="./css/style.css">
     <title>Document</title>
 </head>
 
@@ -37,7 +37,8 @@
                         <label for="monproject">Mon projet</label>
                         <select name="monproject" id="monproject">
                             <option value="J'ai besoin d'argent">J'ai besoin d'argent</option>
-                            <option value="Je finance mon vehicule d'occasion">Je finance mon vehicule d'occasion</option>
+                            <option value="Je finance mon vehicule d'occasion">Je finance mon vehicule d'occasion
+                            </option>
                             <option value="Je Gere mes omprevus">Je Gere mes omprevus</option>
                             <option value="Je finance mon vehicule neuf">Je finance mon vehicule neuf</option>
                             <option value="J'equipe ma maison">J'equipe ma maison</option>
@@ -59,13 +60,14 @@
                     </div>
 
 
-
                     <div class="inputcontainers">
                         <div class="montant inputcontainer">
                             <label for="montant_endh_text_aread">Montant (en DH)</label>
                             <div class="inputcontainer_inside">
-                                <input name="montant" type="text" value="5000" id="montant_endh_text_aread" class="inputcontainer_input">
-                                <input type="range" class="rangeinputs" id="montant_range" min="5000" max="400000" value="10000" step="1000">
+                                <input name="montant" type="text" value="5000" id="montant_endh_text_aread"
+                                       class="inputcontainer_input">
+                                <input type="range" class="rangeinputs" id="montant_range" min="5000" max="400000"
+                                       value="10000" step="1000">
                             </div>
                         </div>
 
@@ -73,27 +75,27 @@
                             <label for="dure">Duree (en mois)</label>
                             <div class="inputcontainer_inside">
                                 <input name="dure" type="text" value="24" id="dure" class="inputcontainer_input">
-                                <input type="range" class="rangeinputs" id="dure_range" min="6" value="24" max="120" step="6">
+                                <input type="range" class="rangeinputs" id="dure_range" min="6" value="24" max="120"
+                                       step="6">
                             </div>
                         </div>
 
                         <div class="mensualite inputcontainer">
-                                <label for="mensualite">Mensualites (en DH)</label>
+                            <label for="mensualite">Mensualites (en DH)</label>
                             <div class="inputcontainer_inside">
-                                <input name="mensualite" type="text" id="mensualite" value="469.4" class="inputcontainer_input">
-                                <input type="range" id="mensualite_range" min="141.83" value="469.4" max="900.68" step="1" class="rangeinputs">
+                                <input name="mensualite" type="text" id="mensualite" value="469.4"
+                                       class="inputcontainer_input">
+                                <input type="range" id="mensualite_range" min="141.83" value="469.4" max="900.68"
+                                       step="1" class="rangeinputs">
                             </div>
                         </div>
 
                     </div>
 
 
-
-
-                    <button type="button"  id="firstconfirmButton" onclick="nextSection(2)">
+                    <button type="button" id="firstconfirmButton" onclick="nextSection(2)">
                         Continuer <span>Sans engagement</span>
                     </button>
-
 
 
                 </div>
@@ -112,7 +114,8 @@
                     </div>
 
 
-                    <button type="button" id="secondconfirmButton" onclick="nextSection(3)"> Continuer <span>Sans engagement</span></button>
+                    <button type="button" id="secondconfirmButton" onclick="nextSection(3)"> Continuer <span>Sans engagement</span>
+                    </button>
 
                 </div>
 
@@ -130,7 +133,8 @@
                             </div>
 
                             <div class="radio">
-                                <input name="civilite" id="radio-2" value="Mademoiselle" name="radio" type="radio" checked>
+                                <input name="civilite" id="radio-2" value="Mademoiselle" name="radio" type="radio"
+                                       checked>
                                 <label for="radio-2" class="radio-label">Mademoiselle</label>
                             </div>
 
@@ -160,16 +164,20 @@
 
                         <div class="DateDeNaissance allays">
                             <label for="datenaissance" class="cordonee_labels_date">Date de naissance</label>
-                            <input name="datenaissance" type="text" class="cordonee_inputs" id="datenaissance" placeholder="YYYY/MM/JJ">
+                            <input name="datenaissance" type="text" class="cordonee_inputs" id="datenaissance"
+                                   placeholder="YYYY/MM/JJ">
                         </div>
 
                         <div class="DateDembauche allays">
-                            <label for="datedembauche" class="cordonee_labels_date">Date d'embauche/debut de l'activite</label>
-                            <input name="DateDembauche" type="text" class="cordonee_inputs" id="datedembauche" placeholder="YYYY/MM/JJ">
+                            <label for="datedembauche" class="cordonee_labels_date">Date d'embauche/debut de
+                                l'activite</label>
+                            <input name="DateDembauche" type="text" class="cordonee_inputs" id="datedembauche"
+                                   placeholder="YYYY/MM/JJ">
                         </div>
 
                         <div class="totalrevenue allays">
-                            <label for="totalrevenue" class="cordonee_labels">Total revenues mensuels (net en DH)</label>
+                            <label for="totalrevenue" class="cordonee_labels">Total revenues mensuels (net en
+                                DH)</label>
                             <input name="totalrevenue" type="text" class="cordonee_inputs" id="totalrevenue">
                         </div>
 
@@ -179,12 +187,13 @@
 
                         <div class="captcha">
                             <input type="checkbox" id="mustbechecked">
-                            <p>J'ai lu et j'accepte les conditions generales d'utilisation figurant sur les informations legales,
+                            <p>J'ai lu et j'accepte les conditions generales d'utilisation figurant sur les informations
+                                legales,
                                 notamment la mention relative a la protection des donnees personnelles</p>
                         </div>
 
 
-                        <button type="submit" id="LastconfirmButton"> Demande ce credit </button>
+                        <button type="submit" id="LastconfirmButton"> Demande ce credit</button>
 
                     </div>
 
@@ -192,15 +201,10 @@
                 </div>
 
 
-
-
             </form>
 
 
         </div>
-
-
-
 
 
         <div class="rightcontainer">
@@ -218,13 +222,10 @@
         </div>
 
 
-
-
     </div>
 </main>
 
 </body>
-
 
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -257,7 +258,7 @@
         }
 
         // Show the Toast message
-        Toast.fire({ icon, title }).then(() => {
+        Toast.fire({icon, title}).then(() => {
             // Invalidate the session after the toast is shown
             <% session.invalidate(); %>
             // Optionally reload or redirect the page

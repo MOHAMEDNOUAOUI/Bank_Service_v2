@@ -3,13 +3,7 @@
 <%@ page import="com.wora.bankservice.entity.DemandeStatut" %>
 <%@ page import="com.wora.bankservice.entity.Statut" %>
 <%@ page import="java.util.Set" %>
-<%@ page import="java.util.ArrayList" %><%--
-  Created by IntelliJ IDEA.
-  User: nawawi
-  Date: 10/5/24
-  Time: 4:20 PM
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%List<Demande> DemandeList = (List<Demande>) request.getAttribute("DemandeList");%>
 <html lang="en">
@@ -35,17 +29,19 @@
             justify-content: right;
             align-items: center;
         }
-        .popup .minipopup{
+
+        .popup .minipopup {
             width: 23rem;
             height: 23rem;
             position: absolute;
             top: 50%;
             left: 10%;
-            transform: translate(-50%,-50%);
+            transform: translate(-50%, -50%);
             border-radius: 20px;
             background: radial-gradient(circle at 12.3% 19.3%, rgb(85, 88, 218) 0%, rgb(95, 209, 249) 100.2%);
             box-shadow: rgba(2, 140, 150, 0.5) 0px 8px 30px; /* Using the same color */
         }
+
         .popup-content {
             width: 65%;
             height: 60%;
@@ -53,10 +49,12 @@
             flex-direction: column;
             justify-content: center;
         }
-        .popuptopper{
+
+        .popuptopper {
             display: flex;
             justify-content: space-between;
         }
+
         .close-btn {
             position: absolute;
             top: 1rem;
@@ -64,19 +62,23 @@
             cursor: pointer;
             font-size: 2rem;
         }
+
         tr {
             cursor: pointer;
         }
+
         tr:hover {
             background-color: #f5f5f5;
         }
-        .container-next{
+
+        .container-next {
             display: flex;
             width: 100%;
             align-content: center;
             justify-content: space-between;
         }
-        #popupContent{
+
+        #popupContent {
             display: flex;
             flex-direction: column;
             gap: 1rem;
@@ -84,39 +86,47 @@
             transform: translateX(0);
             opacity: 1;
         }
-        #popupContent.slide-out{
+
+        #popupContent.slide-out {
             transform: translateX(10%);
             opacity: 0;
         }
-        #popupContent #dateandname{
+
+        #popupContent #dateandname {
             font-size: 1rem;
             font-weight: bold;
         }
-        #popupContent #dateandname span{
+
+        #popupContent #dateandname span {
             color: grey;
             font-size: 1rem;
         }
-        #popupContent h4{
+
+        #popupContent h4 {
             font-weight: bold;
             font-size: 2rem;
         }
+
         #popupContent div p {
             font-size: 1.2rem;
             color: #505050;
         }
+
         #popupContent div p strong {
             color: rgb(2, 140, 150);
             font-weight: bold;
         }
+
         #popupContent div p span {
             font-size: 1.1rem;
             color: black;
             font-weight: bold;
         }
+
         #popupContent button {
             width: fit-content;
             padding: 1rem 3rem;
-            border-radius:40px;
+            border-radius: 40px;
             background: radial-gradient(circle at 12.3% 19.3%, rgb(85, 88, 218) 0%, rgb(95, 209, 249) 100.2%);
             color: white;
             cursor: pointer;
@@ -124,6 +134,14 @@
             box-shadow: rgba(2, 140, 150, 0.5) 0px 3px;
             font-weight: bold;
             font-size: 1.1rem;
+        }
+
+        #popupContent ul {
+            height: 14rem;
+            gap: 0.5rem;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
         }
     </style>
     <title>Demande List</title>
@@ -133,10 +151,16 @@
     <h1>Demande List</h1>
     <div class="container-next">
         <input pattern="yyyy-mm-dd" type="date" id="date-filter" placeholder="Filter">
-        <button>reset</button>
+        <select name="statut">
+            <option selected value="0">ALL</option>
+            <option value="1">ACCEPTED</option>
+            <option value="2">CANCELED</option>
+            <option value="3">REFUSED</option>
+            <option value="4">PENDING</option>
+        </select>
     </div>
     <%
-        if(DemandeList != null && !DemandeList.isEmpty()){
+        if (DemandeList != null && !DemandeList.isEmpty()) {
     %>
     <table id="demandeTable">
         <thead>
@@ -152,15 +176,25 @@
         </tr>
         </thead>
         <tbody>
-        <% for (Demande d : DemandeList) { %>
-        <tr onclick="callpopup(<%= d.getId()%>)">
-            <td><%= d.getNom()%></td>
-            <td><%= d.getPrenom()%></td>
-            <td><%= d.getTelephone() %></td>
-            <td><%= d.getDatedebauche() %></td>
-            <td><%= d.getDatedebauche()%></td>
-            <td><%= d.getCIN()%></td>
-            <td><%= d.getEmail() %></td>
+        <% for (Demande d : DemandeList) {
+            List<DemandeStatut> statusList = new ArrayList<>(d.getDemandeStatuts());
+            DemandeStatut lastStatut = statusList.get(statusList.size() - 1);
+        %>
+        <tr data-statut="<%= lastStatut.getStatut().getId()%>" onclick="callpopup(<%= d.getId() %>)">
+            <td><%= d.getNom() %>
+            </td>
+            <td><%= d.getPrenom() %>
+            </td>
+            <td><%= d.getTelephone() %>
+            </td>
+            <td><%= d.getDatedebauche() %>
+            </td>
+            <td><%= d.getDatedebauche() %>
+            </td>
+            <td><%= d.getCIN() %>
+            </td>
+            <td><%= d.getEmail() %>
+            </td>
         </tr>
         <% } %>
         </tbody>
@@ -173,7 +207,7 @@
 <div id="popup" class="popup">
     <div class="minipopup"></div>
     <div class="popup-content">
-            <span class="close-btn" onclick="closePopup()">&times;</span>
+        <span class="close-btn" onclick="closePopup()">&times;</span>
         <div id="popupContent">
 
         </div>
@@ -181,8 +215,8 @@
 </div>
 
 <script>
-
     const olddata = document.querySelector('#demandeTable tbody').innerHTML;
+    const alltr = document.querySelectorAll('#demandeTable tbody tr');
     var popupdata = null;
 
     const demandeData = {
@@ -213,12 +247,12 @@
                 {
                     statut: "<%= demandeStatut.getStatut().getStatut() %>",
                     dateInsert: "<%= demandeStatut.getDateInsert() %>"
-                }<% if (i < statuses.size() - 1) { %>,<% } %>
+                }<% if (i < statuses.size() - 1) { %>, <% } %>
                 <%
                 }
                 %>
             ]
-        }<% if (!d.equals(DemandeList.get(DemandeList.size() - 1))) { %>,<% } %>
+        }<% if (!d.equals(DemandeList.get(DemandeList.size() - 1))) { %>, <% } %>
         <% } %>
     };
 
@@ -253,8 +287,9 @@
             %>
             {
                 statut: "<%= demandeStatut.getStatut().getStatut() %>",
+                statutid: "<%= demandeStatut.getStatut().getId()%>",
                 dateInsert: "<%= demandeStatut.getDateInsert() %>"
-            }<% if (i < statuses.size() - 1) { %>,<% } %>
+            }<% if (i < statuses.size() - 1) { %>, <% } %>
             <%
             }
             %>
@@ -283,8 +318,8 @@
                 "<strong>Mensualité:</strong> " + demande.mensualite + ", " +
                 "<strong>Statuts:</strong> <br>" + statusDetails +
                 "<strong>Revenu total:</strong> " + demande.totalRevenue + ".</p>" +
-                "</div>"+
-                "<button onclick='findhistory("+id+")'>Historique</button>";
+                "</div>" +
+                "<button onclick='findhistory(" + id + ")'>Historique</button>";
             document.getElementById('popupContent').innerHTML = content;
             console.log(demande.nom);
             document.getElementById('popup').style.display = 'flex';
@@ -302,35 +337,37 @@
     }
 
 
-    document.querySelector('#date-filter').addEventListener('input' , function () {
+    document.querySelector('#date-filter').addEventListener('input', function () {
         console.log(this.value);
         var demandelist = demandeDatawithDate[this.value];
         document.querySelector('#demandeTable tbody').innerHTML = '';
-        if(demandelist && demandelist.length > 0){
+        if (demandelist && demandelist.length > 0) {
             demandelist.forEach(demand => {
-                CreateDemandInsideHtml(demand);
+                var laststatutid = demand.demandeStatutList[demand.demandeStatutList.length - 1].statutid;
+                CreateDemandInsideHtml(demand, laststatutid);
             })
         }
     })
 
 
-    function CreateDemandInsideHtml(demand) {
+    function CreateDemandInsideHtml(demand, laststatutid) {
         const container = document.querySelector('#demandeTable tbody');
         const row = document.createElement('tr');
-        row.setAttribute('onclick' , "callpopup("+demand.id+")");
-        var content = "<td>"+demand.nom+"</td>"+
-            "<td>"+demand.prenom+"</td>"+
-            "<td>"+demand.telephone+"</td>"+
-            "<td>"+demand.datedenaissance+"</td>"+
-            "<td>"+demand.datedebauche+"</td>"+
-            "<td>"+demand.cin+"</td>"+
-            "<td>"+demand.email+"</td>";
+        row.setAttribute('onclick', "callpopup(" + demand.id + ")");
+        row.setAttribute('data-statut', laststatutid);
+        var content = "<td>" + demand.nom + "</td>" +
+            "<td>" + demand.prenom + "</td>" +
+            "<td>" + demand.telephone + "</td>" +
+            "<td>" + demand.datedenaissance + "</td>" +
+            "<td>" + demand.datedebauche + "</td>" +
+            "<td>" + demand.cin + "</td>" +
+            "<td>" + demand.email + "</td>";
         row.innerHTML = content;
         container.appendChild(row);
     }
 
     function formatDate(dateString) {
-        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        const options = {year: 'numeric', month: 'long', day: 'numeric'};
         const date = new Date(dateString);
         return date.toLocaleDateString('en-US', options);
     }
@@ -343,17 +380,13 @@
         popupdata = popupContent.innerHTML;
 
         setTimeout(() => {
-            let historyContent = "";
-
+            let historyContent = "<ul>";
             demande.demandeStatutList.forEach(demandestatut => {
                 historyContent += "<li><strong>Statut:</strong> " + demandestatut.statut +
                     ", <strong>Date:</strong> " + formatDate(demandestatut.dateInsert) + "</li>";
             });
-
             historyContent += "</ul>";
             historyContent += "<button onclick='goback()'>Go back</button>";
-
-            // Update the content and remove the slide-out class
             popupContent.innerHTML = historyContent;
             popupContent.classList.remove('slide-out');
         }, 500);
@@ -365,8 +398,24 @@
         setTimeout(() => {
             popupContent.innerHTML = popupdata;
             popupContent.classList.remove('slide-out');
-        },500);
+        }, 500);
     }
+
+
+    document.querySelector('select').addEventListener('change', function () {
+        const selectedStatut = this.value;
+        console.log(selectedStatut)
+        const rows = document.querySelectorAll('tbody tr');
+        rows.forEach(row => {
+            const statutValue = row.getAttribute('data-statut');
+            if (selectedStatut == 0 || statutValue == selectedStatut) {
+                console.log(statutValue);
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    });
 
 </script>
 </body>
