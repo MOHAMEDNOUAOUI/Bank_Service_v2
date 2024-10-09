@@ -45,3 +45,174 @@ tr:hover {
     color: #666;
     font-style: italic;
 }
+
+.popup {
+    display: none;
+    position: fixed;
+    left: 50%;
+    top: 40%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    width: 50vw;
+    height: 50vh;
+    border-radius: 20px;
+    justify-content: right;
+    align-items: center;
+}
+
+.popup .minipopup {
+    width: 23rem;
+    height: 23rem;
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    transform: translate(-50%, -50%);
+    border-radius: 20px;
+    background: radial-gradient(circle at 12.3% 19.3%, rgb(85, 88, 218) 0%, rgb(95, 209, 249) 100.2%);
+    box-shadow: rgba(2, 140, 150, 0.5) 0px 8px 30px; /* Using the same color */
+}
+
+.popup-content {
+    width: 65%;
+    height: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.popuptopper {
+    display: flex;
+    justify-content: space-between;
+}
+
+.close-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    cursor: pointer;
+    font-size: 2rem;
+}
+
+tr {
+    cursor: pointer;
+}
+
+tr:hover {
+    background-color: #f5f5f5;
+}
+
+.container-next {
+    display: flex;
+    width: 100%;
+    align-content: center;
+    justify-content: space-between;
+}
+
+#popupContent {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+    transform: translateX(0);
+    opacity: 1;
+}
+
+#popupContent.slide-out {
+    transform: translateX(10%);
+    opacity: 0;
+}
+
+#popupContent #dateandname {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+#popupContent #dateandname span {
+    color: grey;
+    font-size: 1rem;
+}
+
+#popupContent h4 {
+    font-weight: bold;
+    font-size: 2rem;
+}
+
+#popupContent div p {
+    font-size: 1.2rem;
+    color: #505050;
+}
+
+#popupContent div p strong {
+    color: rgb(2, 140, 150);
+    font-weight: bold;
+}
+
+#popupContent div p span {
+    font-size: 1.1rem;
+    color: black;
+    font-weight: bold;
+}
+
+#popupContent .gobackbuttons {
+    width: fit-content;
+    padding: 1rem 3rem;
+    border-radius: 40px;
+    background: radial-gradient(circle at 12.3% 19.3%, rgb(85, 88, 218) 0%, rgb(95, 209, 249) 100.2%);
+    color: white;
+    cursor: pointer;
+    border: none;
+    box-shadow: rgba(2, 140, 150, 0.5) 0px 3px;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+#popupContent ul {
+    height: 14rem;
+    gap: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+#popupContent #buttonsholder {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-right: 2rem;
+}
+#popupContent #buttonsholder div{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    position: absolute;
+    right: 0;
+    bottom: 3.5rem;
+}
+#popupContent #buttonsholder div button {
+    border-radius: 100px;
+    width: 3rem;
+    height: 3rem;
+    border: none;
+    cursor: pointer;
+    transition: 0.7s ease;
+}
+#popupContent #buttonsholder div button:hover {
+    transform: scale(1.1);
+}
+#popupContent #buttonsholder div .renew{
+    background-color: black;
+}
+#popupContent #buttonsholder div .cancel{
+    background-color: red;
+}
+#popupContent #buttonsholder div .accept {
+    background-color: green;
+}
+#popupContent #buttonsholder div .reject {
+    background-color: orange;
+}
+

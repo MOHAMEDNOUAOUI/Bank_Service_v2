@@ -22,6 +22,7 @@ montantRange.addEventListener('input', (e) => {
 dureRange.addEventListener('input', (e) => {
     dureHolder.value = e.target.value;
     dureRange.setAttribute('value', e.target.value);
+    document.querySelector('#dure_range_actualy').value = e.target.value;
     updateMensualiteRange();
     calculateMensualiteByMontant();
 });
@@ -75,13 +76,14 @@ function calculateDure() {
         return;
     }
 
-    let dure = calculateDuration(montant, mensualite);
-    dure = Math.max(MIN_DURATION, Math.min(MAX_DURATION, dure));
+    let dureold = calculateDuration(montant, mensualite);
+    dure = Math.max(MIN_DURATION, Math.min(MAX_DURATION, dureold));
     dure = Math.round(dure / DURATION_STEP) * DURATION_STEP;
 
     dureHolder.value = dure;
     dureRange.value = dure;
-    dureRange.setAttribute('value', dure);
+    dureRange.setAttribute('value', dureold);
+    document.querySelector('#dure_range_actualy').value = dureold;
 }
 
 // Initial setup

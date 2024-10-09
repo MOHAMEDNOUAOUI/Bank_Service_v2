@@ -7,12 +7,17 @@ import com.wora.bankservice.repository.impl.DemandeRepositoryImpl;
 import com.wora.bankservice.repository.impl.DemandeStatutRepositoryImpl;
 import com.wora.bankservice.repository.impl.StatutRepositoryImpl;
 import com.wora.bankservice.service.DemandeService;
+import com.wora.bankservice.validation.validator;
 import jakarta.transaction.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static com.wora.bankservice.validation.validator.validateDate;
+import static com.wora.bankservice.validation.validator.validationCalcule;
 
 public class DemandeServiceImpl implements DemandeService {
 
@@ -30,13 +35,17 @@ public class DemandeServiceImpl implements DemandeService {
     public Demande createDemande(Demande demande) {
         Optional<Statut> statut = statutRepo.findByStatut("PENDING");
         if(demande != null) {
-            if (statut.isPresent()) {
-                DemandeStatut demandStatus = new DemandeStatut();
-                demandStatus.setStatut(statut.get());
-                demandStatus.setDemande(demande);
-                demandStatus.setDateInsert(LocalDateTime.now());
-                repo.save(demande);
-                demandRepo.save(demandStatus);
+            if(validationCalcule(demande)){
+                if (statut.isPresent()) {
+                    DemandeStatut demandStatus = new DemandeStatut();
+                    System.out.println(demande.getDuree());
+                    System.out.println(demande.getMensualite());
+                    demandStatus.setStatut(statut.get());
+                    demandStatus.setDemande(demande);
+                    demandStatus.setDateInsert(LocalDateTime.now());
+                    repo.save(demande);
+                    demandRepo.save(demandStatus);
+                }
             }
         }
         return demande;
@@ -67,5 +76,15 @@ public class DemandeServiceImpl implements DemandeService {
             return Optional.of(demande1);
         }
         return Optional.empty();
+    }
+
+    @Override
+    public List<Demande> findAllDemandesByDate(String date) {
+        List<Demande> demandeList = List.of();
+        LocalDate newdate = validateDate(date);
+        if(newdate != null){
+            demandeList = repo.findDemandeByDate(newdate);
+        }
+        return demandeList;
     }
 }

@@ -7,6 +7,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -77,5 +78,16 @@ public class DemandeRepositoryImpl implements DemandeRepository {
         EntityTransaction.commit();
         em.close();
         return demandemerge;
+    }
+
+    @Override
+    public List<Demande> findDemandeByDate(LocalDate date) {
+        EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        tx.begin();
+        List DemandeList = em.createQuery("SELECT d FROM Demande d JOIN FETCH d.demandeStatuts ds JOIN FETCH ds.statut s WHERE d.Datedebauche = :dateembauche")
+                .setParameter("dateembauche", date)
+                .getResultList();
+        return DemandeList;
     }
 }

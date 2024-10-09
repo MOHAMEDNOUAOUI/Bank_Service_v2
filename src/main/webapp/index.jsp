@@ -13,7 +13,6 @@
 
 <main>
     <h1>Demander mon credit en ligne</h1>
-    <a href="/Admin">Click me</a>
     <div class="container">
         <div class="leftcontainer">
 
@@ -74,9 +73,10 @@
                         <div class="duree inputcontainer">
                             <label for="dure">Duree (en mois)</label>
                             <div class="inputcontainer_inside">
-                                <input name="dure" type="text" value="24" id="dure" class="inputcontainer_input">
+                                <input  type="text" value="24" id="dure" class="inputcontainer_input">
                                 <input type="range" class="rangeinputs" id="dure_range" min="6" value="24" max="120"
                                        step="6">
+                                <input type="hidden" name="dure" id="dure_range_actualy" value="24">
                             </div>
                         </div>
 
@@ -242,10 +242,8 @@
         }
     });
 
-    // Get the session message
     const sessionMessage = "<%= (session.getAttribute("message") != null) ? session.getAttribute("message") : "" %>";
 
-    // Check if there is a session message
     if (sessionMessage) {
         let title, icon;
 
@@ -255,16 +253,20 @@
         } else if (sessionMessage === "error") {
             icon = "error";
             title = "Something went wrong, sorry";
+        }else{
+            icon ="warning";
+            title = "<%=session.getAttribute("message")%>"
         }
 
-        // Show the Toast message
         Toast.fire({icon, title}).then(() => {
-            // Invalidate the session after the toast is shown
             <% session.invalidate(); %>
-            // Optionally reload or redirect the page
-            window.location.reload();
         });
     }
+
+
+    document.querySelector('#mensualite_range').addEventListener('input' , function () {
+        console.log(document.querySelector('#dure_range_actualy').value);
+    })
 </script>
 
 <script src="./js/javascript.js"></script>

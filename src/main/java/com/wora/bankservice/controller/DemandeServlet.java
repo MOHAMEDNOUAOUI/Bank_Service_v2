@@ -20,17 +20,21 @@ public class DemandeServlet extends HttpServlet {
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-            if (isValid(request)) {
+        HttpSession session = request.getSession();
+        if (isValid(request)) {
                 Demande demande = savetoDatabase(request);
-                HttpSession session = request.getSession();
+
                 if(demande!=null) {
                     session.setAttribute("message", "success" );
                 }
                 else {
                     session.setAttribute("message", "error" );
                 }
-            response.sendRedirect("/");
-            }
+
+            }else{
+            session.setAttribute("message", "Request is not valid" );
+        }
+        response.sendRedirect("/");
     }
 
     private Demande savetoDatabase(HttpServletRequest request) {
@@ -38,7 +42,7 @@ public class DemandeServlet extends HttpServlet {
         demande.setMonproject(request.getParameter("monproject"));
         demande.setJesuis(request.getParameter("jesuis_select"));
         demande.setMontant(Double.parseDouble(request.getParameter("montant")));
-        demande.setDuree(Integer.parseInt(request.getParameter("dure")));
+        demande.setDuree(Double.parseDouble(request.getParameter("dure")));
         demande.setMensualite(Double.parseDouble(request.getParameter("mensualite")));
         demande.setEmail(request.getParameter("email"));
         demande.setTelephone(request.getParameter("telephone"));
@@ -76,6 +80,7 @@ public class DemandeServlet extends HttpServlet {
         String DateDembauche = request.getParameter("DateDembauche");
         String totalrevenueStr = request.getParameter("totalrevenue");
 
+
         if (monproject == null || jesuis == null || montantStr == null || dureStr == null ||
                 mensualiteStr == null || email == null || telephone == null ||
                 civilite == null || nom == null || prenom == null || CIN == null ||
@@ -87,12 +92,12 @@ public class DemandeServlet extends HttpServlet {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 
             Double montant = Double.parseDouble(montantStr);
-            int dure = Integer.parseInt(dureStr);
             Double mensualite = Double.parseDouble(mensualiteStr);
             Double totalrevenue = Double.parseDouble(totalrevenueStr);
+            Double dure = Double.parseDouble(request.getParameter("dure"));
             LocalDate datenaissanceDate = LocalDate.parse(datenaissance.trim(), formatter);
             LocalDate datedembauche = LocalDate.parse(DateDembauche.trim(), formatter);
-            if (montant <= 0 || dure <= 0 || mensualite <= 0 || totalrevenue <= 0) {
+            if (montant <= 0 ||  dure <= 0 || mensualite <= 0 || totalrevenue <= 0) {
                 return false;
             }
             if (!email.matches("^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$")) {

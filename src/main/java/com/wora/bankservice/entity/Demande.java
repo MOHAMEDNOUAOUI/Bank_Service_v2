@@ -45,7 +45,7 @@ public class Demande implements Serializable {
     @Min(6)
     @Max(120)
     @Positive
-    private int Duree;
+    private double Duree;
 
     @Positive
     @Column(name = "mensualite")
