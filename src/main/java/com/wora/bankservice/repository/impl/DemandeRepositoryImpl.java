@@ -6,6 +6,7 @@ import com.wora.bankservice.repository.DemandeRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
+import org.hibernate.service.spi.InjectService;
 
 import java.time.LocalDate;
 import java.util.List;

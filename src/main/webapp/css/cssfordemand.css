@@ -184,15 +184,16 @@ tr:hover {
     justify-content: space-between;
     padding-right: 2rem;
 }
-#popupContent #buttonsholder div{
+#popupContent #buttonsholder form{
     display: flex;
     flex-direction: column;
     gap: 1rem;
     position: absolute;
-    right: 0;
-    bottom: 3.5rem;
+    top: 50%;
+    left: 95%;
+    transform: translate(-50%,-50%);
 }
-#popupContent #buttonsholder div button {
+#popupContent #buttonsholder form button {
     border-radius: 100px;
     width: 3rem;
     height: 3rem;
@@ -200,19 +201,23 @@ tr:hover {
     cursor: pointer;
     transition: 0.7s ease;
 }
-#popupContent #buttonsholder div button:hover {
+#popupContent #buttonsholder form button:hover {
     transform: scale(1.1);
 }
-#popupContent #buttonsholder div .renew{
+#popupContent #buttonsholder form .renew{
     background-color: black;
 }
-#popupContent #buttonsholder div .cancel{
+#popupContent #buttonsholder form .cancel{
     background-color: red;
 }
-#popupContent #buttonsholder div .accept {
+#popupContent #buttonsholder form .accept {
+    background-image: url("../images/check-o.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
     background-color: green;
 }
-#popupContent #buttonsholder div .reject {
+#popupContent #buttonsholder form .reject {
     background-color: orange;
 }
 

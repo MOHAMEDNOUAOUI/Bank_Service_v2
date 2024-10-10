@@ -4,6 +4,7 @@
 <%@ page import="com.wora.bankservice.entity.Statut" %>
 <%@ page import="java.util.Set" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.Comparator" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%List<Demande> DemandeList = (List<Demande>) request.getAttribute("DemandeList");%>
 <html lang="en">
@@ -107,15 +108,18 @@
             totalRevenue: "<%= d.getTotalrevenue() %>",
             demandeStatutList: [
                 <%
-                Set<DemandeStatut> statuses = d.getDemandeStatuts();
-                List<DemandeStatut> statusList = new ArrayList<>(statuses);
+                Set<DemandeStatut> demandeStatuts = d.getDemandeStatuts();
+                List<DemandeStatut> statusList = new ArrayList<>(demandeStatuts);
+
+                statusList.sort(Comparator.comparing(DemandeStatut::getDateInsert));
+
                 for (int i = 0; i < statusList.size(); i++) {
-                    DemandeStatut demandeStatut = statusList.get(i);
+                    DemandeStatut statut = statusList.get(i);
                 %>
                 {
-                    statut: "<%= demandeStatut.getStatut().getStatut() %>",
-                    dateInsert: "<%= demandeStatut.getDateInsert() %>"
-                }<% if (i < statuses.size() - 1) { %>, <% } %>
+                    statut: "<%= statut.getStatut().getStatut() %>",
+                    dateInsert: "<%= statut.getDateInsert() %>"
+                }<% if (i < statusList.size() - 1) { %>, <% } %>
                 <%
                 }
                 %>
@@ -123,7 +127,6 @@
         }<% if (!d.equals(DemandeList.get(DemandeList.size() - 1))) { %>, <% } %>
         <% } %>
     };
-
 
     function getmoredata(id) {
         const demande = demandeData[id];
@@ -156,7 +159,6 @@
 
 
     function callpopup(id) {
-        console.log(id);
         getmoredata(id);
     }
 
@@ -188,7 +190,7 @@
     */
 
     function formatDate(dateString) {
-        const options = {year: 'numeric', month: 'long', day: 'numeric'};
+        const options = {year: 'numeric', month: 'long', day: 'numeric' , hour: '2-digit' , minute: '2-digit' , hour12:true};
         const date = new Date(dateString);
         return date.toLocaleDateString('en-US', options);
     }
@@ -210,19 +212,18 @@
             historyContent += "<div id='buttonsholder'>";
             historyContent += "<button type='button' class='gobackbuttons' onclick='goback()'>Go Back</button>";
             const statut = demande.demandeStatutList[demande.demandeStatutList.length -1].statut;
-            historyContent += "<div>";
+            historyContent += "<form id='formstatut' method='POST' action='/Admin'>";
             if(statut === "CANCELED" || statut ==="REFUSED"){
-                historyContent += "<button onclick='buttonsAdmin(this)' class='renew'></button>";
+                historyContent += "<button type='button' value='renew' onclick='buttonsAdmin(this , "+id+")' class='renew'></button>";
             }else if(statut === "ACCEPTED"){
-                historyContent += "<button onclick='buttonsAdmin(this)' class='cancel'></button>";
-                historyContent += "<button onclick='buttonsAdmin(this)' class='reject'></button>";
+                historyContent += "<button type='button'  value='cancel' onclick='buttonsAdmin(this , "+id+")' class='cancel'></button>";
+                historyContent += "<button type='button' value='reject' onclick='buttonsAdmin(this , "+id+")' class='reject'></button>";
             }else if(statut === "PENDING"){
-                historyContent += "<button onclick='buttonsAdmin(this)' class='accept'></button>";
-                historyContent += "<button onclick='buttonsAdmin(this)' class='cancel'></button>";
-                historyContent += "<button onclick='buttonsAdmin(this)' class='reject'></button>";
+                historyContent += "<button type='button' value='accept' onclick='buttonsAdmin(this , "+id+")' class='accept'></button>";
+                historyContent += "<button type='button' value='cancel' onclick='buttonsAdmin(this , "+id+")' class='cancel'></button>";
+                historyContent += "<button type='button' value='reject' onclick='buttonsAdmin(this , "+id+")'  class='reject'></button>";
             }
-
-            historyContent += "</div>"
+            historyContent += "</form>"
             historyContent += "</div>";
             popupContent.innerHTML = historyContent;
             popupContent.classList.remove('slide-out');
@@ -253,8 +254,24 @@
     });
 
 
-    function buttonsAdmin(e){
-        console.log(e);
+    function buttonsAdmin(e , id){
+        console.log(e.value);
+        const form = document.getElementById('formstatut');
+        let input = document.createElement("input");
+        let inputid = document.createElement("input");
+        //input statut type
+        input.setAttribute("name" , "statut");
+        input.setAttribute("id" , "statutinput");
+        input.setAttribute("type" , "hidden");
+        input.setAttribute("value" , e.value);
+        //input demande id
+        inputid.setAttribute("name" , "demandeid");
+        inputid.setAttribute("id" , "statutid");
+        inputid.setAttribute("type" , "hidden");
+        inputid.setAttribute("value",id);
+        form.appendChild(input);
+        form.appendChild(inputid);
+        document.querySelector('#formstatut').submit();
     }
 
 </script>

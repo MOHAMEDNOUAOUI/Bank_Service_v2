@@ -8,6 +8,8 @@ import com.wora.bankservice.repository.impl.DemandeStatutRepositoryImpl;
 import com.wora.bankservice.repository.impl.StatutRepositoryImpl;
 import com.wora.bankservice.service.DemandeService;
 import com.wora.bankservice.validation.validator;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 
 import java.time.LocalDate;
@@ -19,11 +21,13 @@ import java.util.Optional;
 import static com.wora.bankservice.validation.validator.validateDate;
 import static com.wora.bankservice.validation.validator.validationCalcule;
 
+@ApplicationScoped
 public class DemandeServiceImpl implements DemandeService {
 
     private DemandeRepositoryImpl repo;
     private StatutRepositoryImpl statutRepo;
     private DemandeStatutRepositoryImpl demandRepo;
+    @Inject
     public DemandeServiceImpl() {
         repo = new DemandeRepositoryImpl();
         statutRepo = new StatutRepositoryImpl();

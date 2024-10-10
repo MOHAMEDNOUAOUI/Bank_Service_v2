@@ -76,4 +76,24 @@ public class validator {
 
         return datedembauche;
     }
+
+    public static String isStatutValid(String statut){
+        if(statut == null){
+            return null;
+        }
+        if(statut.equals("reject")){
+            statut = "REFUSED";
+        }else if(statut.equals("accept")){
+            statut = "ACCEPTED";
+        }else if(statut.equals("cancel")){
+            statut = "CANCELED";
+        }else if(statut.equals("renew")){
+            statut = "PENDING";
+        }
+        else{
+            statut = "NONE";
+        }
+        return statut;
+    }
+
 }
